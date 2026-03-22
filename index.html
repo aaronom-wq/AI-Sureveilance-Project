@@ -82,9 +82,11 @@
         #survey-results { overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
 
         .slide {
-            height: calc(100vh - var(--navbar-height)); scroll-snap-align: start; 
+            /* Using min-height so accordions can expand without clipping */
+            min-height: calc(100vh - var(--navbar-height)); height: auto;
+            scroll-snap-align: start; 
             display: flex; flex-direction: column; align-items: center; 
-            justify-content: center; padding: 40px; box-sizing: border-box; position: relative;
+            justify-content: center; padding: 80px 40px; box-sizing: border-box; position: relative;
         }
         .slide h1 { font-size: 2.2rem; text-align: center; max-width: 900px; margin-bottom: 30px; line-height: 1.4; color: #fff; }
 
@@ -267,7 +269,7 @@
             document.getElementById('quoteModal').classList.remove('active');
         }
 
-        // --- DATA 1: Surveillance Technologies Noticed ---
+        // --- DATA 1: Surveillance Technologies Noticed (Reverted to Percentages) ---
         const techData = {
           "Cisgender Female": {"None": 4.8, "Keycard": 57.1, "Cameras": 35.7, "Signs": 2.4},
           "Cisgender Male": {"None": 0.0, "Keycard": 42.9, "Cameras": 42.9, "Signs": 14.3},
@@ -371,8 +373,8 @@
 
         const scroller = document.getElementById('survey-results');
         
-        // Helper to build a standard single-chart slide
-        function buildSlideHTML(title, legendHTML, dataObj, colorObj) {
+        // Helper to build a standard single-chart slide (Reverted `displayAsCount` logic)
+        function buildSlideHTML(title, legendHTML, dataObj, colorObj, displayAsCount = false) {
             let html = `
                 <div class="slide">
                     <h1>${title}</h1>
@@ -381,11 +383,20 @@
             `;
             Object.keys(dataObj).forEach(gender => {
                 html += `<div class="gender-row"><div class="gender-label">${gender}</div><div class="stacked-bar-container">`;
+                
                 const scores = dataObj[gender];
+                
+                let total = 0;
+                if (displayAsCount) {
+                    Object.values(scores).forEach(val => total += val);
+                }
+
                 Object.keys(scores).forEach(key => {
-                    const percentage = scores[key];
-                    if(percentage > 0) {
-                        html += `<div class="bar-segment" style="--target-width: ${percentage}%; background-color: ${colorObj[key]};">${percentage >= 8 ? Math.round(percentage) + '%' : ''}</div>`;
+                    const val = scores[key];
+                    if(val > 0) {
+                        let widthPercent = displayAsCount ? ((val / total) * 100) : val;
+                        let textDisplay = displayAsCount ? val : (val >= 8 ? Math.round(val) + '%' : '');
+                        html += `<div class="bar-segment" style="--target-width: ${widthPercent}%; background-color: ${colorObj[key]};">${textDisplay}</div>`;
                     }
                 });
                 html += `</div></div>`;
@@ -413,7 +424,6 @@
                 
                 const genders = dataObjAll[location];
                 Object.keys(genders).forEach(gender => {
-                    // Note: Labels set to inline opacity:1 because Accordion expansion acts as the animation
                     html += `<div class="gender-row"><div class="gender-label" style="opacity:1; transform:translateX(0); width:200px; text-align:right;">${gender}</div><div class="stacked-bar-container">`;
                     const scores = genders[gender];
                     Object.keys(scores).forEach(key => {
@@ -447,7 +457,7 @@
             </div>
         `;
 
-        // Slide 1: Tech Noticed
+        // Slide 1: Tech Noticed (Reverted to Percentages, no `true` flag passed)
         const techLegend = `
             <div class="legend-item"><div class="color-box" style="background: var(--tech-none)"></div> None</div>
             <div class="legend-item"><div class="color-box" style="background: var(--tech-keycard)"></div> Keycard Scanners</div>
