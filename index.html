@@ -82,7 +82,6 @@
         #survey-results { overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
 
         .slide {
-            /* Using min-height so accordions can expand without clipping */
             min-height: calc(100vh - var(--navbar-height)); height: auto;
             scroll-snap-align: start; 
             display: flex; flex-direction: column; align-items: center; 
@@ -235,7 +234,6 @@
         // Accordion Animation Logic
         function toggleAccordion(btn) {
             const container = btn.parentElement;
-            // Close all other accordions
             container.querySelectorAll('.accordion-btn').forEach(b => {
                 if (b !== btn) {
                     b.classList.remove('active');
@@ -244,7 +242,6 @@
                 }
             });
 
-            // Toggle clicked accordion
             btn.classList.toggle('active');
             const content = btn.nextElementSibling;
             const icon = btn.querySelector('.icon');
@@ -253,7 +250,7 @@
                 content.style.maxHeight = null;
                 icon.innerText = '+';
             } else {
-                content.style.maxHeight = content.scrollHeight + 50 + "px"; // Account for padding
+                content.style.maxHeight = content.scrollHeight + 50 + "px"; 
                 icon.innerText = '−';
             }
         }
@@ -264,99 +261,100 @@
             document.getElementById('modalQuote').innerText = `"${fullQuote}"`;
             document.getElementById('quoteModal').classList.add('active');
         }
-
         function closeModal(event) {
             document.getElementById('quoteModal').classList.remove('active');
         }
 
-        // --- DATA 1: Surveillance Technologies Noticed (Reverted to Percentages) ---
+        // --- NEW DATA FORMAT: { "p": percentage, "c": count } ---
+
+        // DATA 1: Tech Noticed
         const techData = {
-          "Cisgender Female": {"None": 4.8, "Keycard": 57.1, "Cameras": 35.7, "Signs": 2.4},
-          "Cisgender Male": {"None": 0.0, "Keycard": 42.9, "Cameras": 42.9, "Signs": 14.3},
-          "Other Non-Binary Identities": {"None": 0.0, "Keycard": 50.0, "Cameras": 50.0, "Signs": 0.0}
+          "Cisgender Female": {"Cameras": {"p": 35.7, "c": 15}, "Keycard": {"p": 57.1, "c": 24}, "None": {"p": 4.8, "c": 2}, "Signs": {"p": 2.4, "c": 1}},
+          "Cisgender Male": {"Cameras": {"p": 42.9, "c": 6}, "Keycard": {"p": 42.9, "c": 6}, "None": {"p": 0.0, "c": 0}, "Signs": {"p": 14.3, "c": 2}},
+          "Other Non-Binary Identities": {"Cameras": {"p": 50.0, "c": 1}, "Keycard": {"p": 50.0, "c": 1}, "None": {"p": 0.0, "c": 0}, "Signs": {"p": 0.0, "c": 0}}
         };
         const techColors = {"None": "var(--tech-none)", "Keycard": "var(--tech-keycard)", "Cameras": "var(--tech-cameras)", "Signs": "var(--tech-signs)"};
 
-        // --- DATA 2: Estimated Camera Count For ALL Locations ---
+        // DATA 2: Camera Counts
         const camDataAll = {
             "Hallways": {
-                "Cisgender Female": {"0": 3.8, "1-5": 65.4, "6-10": 23.1, "11-20": 7.7},
-                "Cisgender Male": {"1-5": 42.9, "6-10": 14.3, "11-20": 28.6, "21-30": 14.3},
-                "Other Non-Binary Identities": {"11-20": 100.0}
+                "Cisgender Female": {"0": {"p": 3.8, "c": 1}, "1-5": {"p": 65.4, "c": 17}, "11-20": {"p": 7.7, "c": 2}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 23.1, "c": 6}},
+                "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 42.9, "c": 3}, "11-20": {"p": 28.6, "c": 2}, "21-30": {"p": 14.3, "c": 1}, "6-10": {"p": 14.3, "c": 1}},
+                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 0.0, "c": 0}, "11-20": {"p": 100.0, "c": 1}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}
             },
             "Washrooms": {
-                "Cisgender Female": {"0": 96.2, "1-5": 3.8},
-                "Cisgender Male": {"0": 85.7, "1-5": 14.3},
-                "Other Non-Binary Identities": {"0": 100.0}
+                "Cisgender Female": {"0": {"p": 96.2, "c": 25}, "1-5": {"p": 3.8, "c": 1}},
+                "Cisgender Male": {"0": {"p": 85.7, "c": 6}, "1-5": {"p": 14.3, "c": 1}},
+                "Other Non-Binary Identities": {"0": {"p": 100.0, "c": 1}, "1-5": {"p": 0.0, "c": 0}}
             },
             "Library": {
-                "Cisgender Female": {"0": 3.8, "1-5": 57.7, "6-10": 23.1, "11-20": 7.7, "21-30": 7.7},
-                "Cisgender Male": {"1-5": 42.9, "6-10": 28.6, "11-20": 28.6},
-                "Other Non-Binary Identities": {"6-10": 100.0}
+                "Cisgender Female": {"0": {"p": 3.8, "c": 1}, "1-5": {"p": 57.7, "c": 15}, "11-20": {"p": 7.7, "c": 2}, "21-30": {"p": 7.7, "c": 2}, "6-10": {"p": 23.1, "c": 6}},
+                "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 42.9, "c": 3}, "11-20": {"p": 28.6, "c": 2}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 28.6, "c": 2}},
+                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 100.0, "c": 1}}
             },
             "Prayer Rooms": {
-                "Cisgender Female": {"0": 76.9, "1-5": 23.1},
-                "Cisgender Male": {"0": 57.1, "1-5": 42.9},
-                "Other Non-Binary Identities": {"1-5": 100.0}
+                "Cisgender Female": {"0": {"p": 76.9, "c": 20}, "1-5": {"p": 23.1, "c": 6}},
+                "Cisgender Male": {"0": {"p": 57.1, "c": 4}, "1-5": {"p": 42.9, "c": 3}},
+                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 1}}
             },
             "Common Areas": {
-                "Cisgender Female": {"0": 7.7, "1-5": 46.2, "6-10": 23.1, "11-20": 15.4, "21-30": 7.7},
-                "Cisgender Male": {"1-5": 28.6, "6-10": 42.9, "11-20": 14.3, "21-30": 14.3},
-                "Other Non-Binary Identities": {"1-5": 100.0}
+                "Cisgender Female": {"0": {"p": 7.7, "c": 2}, "1-5": {"p": 46.2, "c": 12}, "11-20": {"p": 15.4, "c": 4}, "21-30": {"p": 7.7, "c": 2}, "6-10": {"p": 23.1, "c": 6}},
+                "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 28.6, "c": 2}, "11-20": {"p": 14.3, "c": 1}, "21-30": {"p": 14.3, "c": 1}, "6-10": {"p": 42.9, "c": 3}},
+                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 1}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}
             },
             "Classrooms": {
-                "Cisgender Female": {"0": 15.4, "1-5": 57.6, "6-10": 11.5, "11-20": 11.5, "21-30": 3.8},
-                "Cisgender Male": {"0": 28.6, "1-5": 42.9, "6-10": 14.3, "31-40": 14.3},
-                "Other Non-Binary Identities": {"1-5": 100.0}
+                "Cisgender Female": {"0": {"p": 15.4, "c": 4}, "1-5": {"p": 53.8, "c": 14}, "1-5;6-10": {"p": 3.8, "c": 1}, "11-20": {"p": 11.5, "c": 3}, "21-30": {"p": 3.8, "c": 1}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 11.5, "c": 3}},
+                "Cisgender Male": {"0": {"p": 28.6, "c": 2}, "1-5": {"p": 42.9, "c": 3}, "1-5;6-10": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "31-40": {"p": 14.3, "c": 1}, "6-10": {"p": 14.3, "c": 1}},
+                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 1}, "1-5;6-10": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}
             }
         };
-        const camColors = {"0": "var(--cam-0)", "1-5": "var(--cam-1)", "6-10": "var(--cam-6)", "11-20": "var(--cam-11)", "21-30": "var(--cam-21)", "31-40": "var(--cam-31)"};
+        const camColors = {"0": "var(--cam-0)", "1-5": "var(--cam-1)", "6-10": "var(--cam-6)", "11-20": "var(--cam-11)", "21-30": "var(--cam-21)", "31-40": "var(--cam-31)", "1-5;6-10": "var(--cam-6)"};
 
-        // --- DATA 3: 1-5 Likert Scales ---
+        // DATA 3: Likert Scales
         const likertData = {
           "I feel comfortable with security cameras at building entrances.": {
-            "Cisgender Female": {"1": 0.0, "2": 7.7, "3": 11.5, "4": 26.9, "5": 53.8},
-            "Cisgender Male": {"1": 0.0, "2": 0.0, "3": 0.0, "4": 28.6, "5": 71.4},
-            "Other Non-Binary Identities": {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 100.0}
+            "Cisgender Female": {"1": {"p": 0.0, "c": 0}, "2": {"p": 7.7, "c": 2}, "3": {"p": 11.5, "c": 3}, "4": {"p": 26.9, "c": 7}, "5": {"p": 53.8, "c": 14}},
+            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 28.6, "c": 2}, "5": {"p": 71.4, "c": 5}},
+            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 100.0, "c": 1}}
           },
           "Security cameras in hallways are appropriate.": {
-            "Cisgender Female": {"1": 3.8, "2": 11.5, "3": 23.1, "4": 26.9, "5": 34.6},
-            "Cisgender Male": {"1": 0.0, "2": 14.3, "3": 28.6, "4": 28.6, "5": 28.6},
-            "Other Non-Binary Identities": {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 100.0}
+            "Cisgender Female": {"1": {"p": 3.8, "c": 1}, "2": {"p": 11.5, "c": 3}, "3": {"p": 23.1, "c": 6}, "4": {"p": 26.9, "c": 7}, "5": {"p": 34.6, "c": 9}},
+            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 28.6, "c": 2}, "4": {"p": 28.6, "c": 2}, "5": {"p": 28.6, "c": 2}},
+            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 100.0, "c": 1}}
           },
           "Cameras near stairwells or exits are acceptable.": {
-            "Cisgender Female": {"1": 0.0, "2": 0.0, "3": 19.2, "4": 34.6, "5": 46.2},
-            "Cisgender Male": {"1": 0.0, "2": 0.0, "3": 0.0, "4": 28.6, "5": 71.4},
-            "Other Non-Binary Identities": {"1": 0.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 100.0}
+            "Cisgender Female": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 19.2, "c": 5}, "4": {"p": 34.6, "c": 9}, "5": {"p": 46.2, "c": 12}},
+            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 28.6, "c": 2}, "5": {"p": 71.4, "c": 5}},
+            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 100.0, "c": 1}}
           },
           "Cameras should not be placed near private spaces.": {
-            "Cisgender Female": {"1": 3.8, "2": 3.8, "3": 11.5, "4": 23.1, "5": 57.7},
-            "Cisgender Male": {"1": 0.0, "2": 14.3, "3": 28.6, "4": 0.0, "5": 57.1},
-            "Other Non-Binary Identities": {"1": 0.0, "2": 0.0, "3": 100.0, "4": 0.0, "5": 0.0}
+            "Cisgender Female": {"1": {"p": 3.8, "c": 1}, "2": {"p": 3.8, "c": 1}, "3": {"p": 11.5, "c": 3}, "4": {"p": 23.1, "c": 6}, "5": {"p": 57.7, "c": 15}},
+            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 28.6, "c": 2}, "4": {"p": 0.0, "c": 0}, "5": {"p": 57.1, "c": 4}},
+            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 100.0, "c": 1}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}
           },
           "I worry about how surveillance footage might be used or stored.": {
-            "Cisgender Female": {"1": 7.7, "2": 15.4, "3": 26.9, "4": 34.6, "5": 15.4},
-            "Cisgender Male": {"1": 0.0, "2": 14.3, "3": 14.3, "4": 42.9, "5": 28.6},
-            "Other Non-Binary Identities": {"1": 100.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 0.0}
+            "Cisgender Female": {"1": {"p": 7.7, "c": 2}, "2": {"p": 15.4, "c": 4}, "3": {"p": 26.9, "c": 7}, "4": {"p": 34.6, "c": 9}, "5": {"p": 15.4, "c": 4}},
+            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 14.3, "c": 1}, "4": {"p": 42.9, "c": 3}, "5": {"p": 28.6, "c": 2}},
+            "Other Non-Binary Identities": {"1": {"p": 100.0, "c": 1}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}
           },
           "Surveillance cameras in schools make me feel like my privacy is being invaded.": {
-            "Cisgender Female": {"1": 26.9, "2": 26.9, "3": 26.9, "4": 19.2, "5": 0.0},
-            "Cisgender Male": {"1": 14.3, "2": 42.9, "3": 28.6, "4": 14.3, "5": 0.0},
-            "Other Non-Binary Identities": {"1": 100.0, "2": 0.0, "3": 0.0, "4": 0.0, "5": 0.0}
+            "Cisgender Female": {"1": {"p": 26.9, "c": 7}, "2": {"p": 26.9, "c": 7}, "3": {"p": 26.9, "c": 7}, "4": {"p": 19.2, "c": 5}, "5": {"p": 0.0, "c": 0}},
+            "Cisgender Male": {"1": {"p": 14.3, "c": 1}, "2": {"p": 42.9, "c": 3}, "3": {"p": 28.6, "c": 2}, "4": {"p": 14.3, "c": 1}, "5": {"p": 0.0, "c": 0}},
+            "Other Non-Binary Identities": {"1": {"p": 100.0, "c": 1}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}
           },
           "Overall, the presence of surveillance cameras makes me feel safer in the building.": {
-            "Cisgender Female": {"1": 3.8, "2": 15.4, "3": 30.8, "4": 38.5, "5": 11.5},
-            "Cisgender Male": {"1": 0.0, "2": 14.3, "3": 42.9, "4": 14.3, "5": 28.6},
-            "Other Non-Binary Identities": {"1": 0.0, "2": 0.0, "3": 0.0, "4": 100.0, "5": 0.0}
+            "Cisgender Female": {"1": {"p": 3.8, "c": 1}, "2": {"p": 15.4, "c": 4}, "3": {"p": 30.8, "c": 8}, "4": {"p": 38.5, "c": 10}, "5": {"p": 11.5, "c": 3}},
+            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 42.9, "c": 3}, "4": {"p": 14.3, "c": 1}, "5": {"p": 28.6, "c": 2}},
+            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 100.0, "c": 1}, "5": {"p": 0.0, "c": 0}}
           }
         };
         const likertColors = {"1": "var(--color-1)", "2": "var(--color-2)", "3": "var(--color-3)", "4": "var(--color-4)", "5": "var(--color-5)"};
 
-        // --- DATA 4: The "Change in feeling" Question ---
+        // DATA 4: Change in Feeling
         const changeData = {
-          "Cisgender Female": {"Much more comfortable": 3.8, "Slightly more comfortable": 38.5, "No change": 42.3, "Slightly less comfortable": 15.4},
-          "Cisgender Male": {"Much more comfortable": 14.3, "Slightly more comfortable": 28.6, "No change": 42.9, "Slightly less comfortable": 14.3},
-          "Other Non-Binary Identities": {"Much more comfortable": 0.0, "Slightly more comfortable": 0.0, "No change": 100.0, "Slightly less comfortable": 0.0}
+          "Cisgender Female": {"Much more comfortable": {"p": 3.8, "c": 1}, "No change": {"p": 42.3, "c": 11}, "Slightly less comfortable": {"p": 15.4, "c": 4}, "Slightly more comfortable": {"p": 38.5, "c": 10}},
+          "Cisgender Male": {"Much more comfortable": {"p": 14.3, "c": 1}, "No change": {"p": 42.9, "c": 3}, "Slightly less comfortable": {"p": 14.3, "c": 1}, "Slightly more comfortable": {"p": 28.6, "c": 2}},
+          "Other Non-Binary Identities": {"Much more comfortable": {"p": 0.0, "c": 0}, "No change": {"p": 100.0, "c": 1}, "Slightly less comfortable": {"p": 0.0, "c": 0}, "Slightly more comfortable": {"p": 0.0, "c": 0}}
         };
         const changeColors = { "Much more comfortable": "var(--change-much-more)", "Slightly more comfortable": "var(--change-slightly-more)", "No change": "var(--change-no)", "Slightly less comfortable": "var(--change-slightly-less)" };
 
@@ -373,8 +371,9 @@
 
         const scroller = document.getElementById('survey-results');
         
-        // Helper to build a standard single-chart slide (Reverted `displayAsCount` logic)
-        function buildSlideHTML(title, legendHTML, dataObj, colorObj, displayAsCount = false) {
+        // --- RENDER FUNCTIONS UPDATED TO PARSE BOTH % AND COUNT ---
+        
+        function buildSlideHTML(title, legendHTML, dataObj, colorObj) {
             let html = `
                 <div class="slide">
                     <h1>${title}</h1>
@@ -383,20 +382,14 @@
             `;
             Object.keys(dataObj).forEach(gender => {
                 html += `<div class="gender-row"><div class="gender-label">${gender}</div><div class="stacked-bar-container">`;
-                
                 const scores = dataObj[gender];
                 
-                let total = 0;
-                if (displayAsCount) {
-                    Object.values(scores).forEach(val => total += val);
-                }
-
                 Object.keys(scores).forEach(key => {
-                    const val = scores[key];
-                    if(val > 0) {
-                        let widthPercent = displayAsCount ? ((val / total) * 100) : val;
-                        let textDisplay = displayAsCount ? val : (val >= 8 ? Math.round(val) + '%' : '');
-                        html += `<div class="bar-segment" style="--target-width: ${widthPercent}%; background-color: ${colorObj[key]};">${textDisplay}</div>`;
+                    const dataVals = scores[key];
+                    if(dataVals.p > 0) {
+                        // Display formatting: "54% (7)"
+                        let textDisplay = dataVals.p >= 8 ? `${Math.round(dataVals.p)}% (${dataVals.c})` : '';
+                        html += `<div class="bar-segment" style="--target-width: ${dataVals.p}%; background-color: ${colorObj[key]};">${textDisplay}</div>`;
                     }
                 });
                 html += `</div></div>`;
@@ -404,7 +397,6 @@
             return html + `</div><div class="scroll-prompt">Scroll Next 👇</div></div>`;
         }
 
-        // Helper to build the accordion slide for Camera counts
         function buildAccordionSlide(title, legendHTML, dataObjAll, colorObj) {
             let html = `
                 <div class="slide">
@@ -426,10 +418,13 @@
                 Object.keys(genders).forEach(gender => {
                     html += `<div class="gender-row"><div class="gender-label" style="opacity:1; transform:translateX(0); width:200px; text-align:right;">${gender}</div><div class="stacked-bar-container">`;
                     const scores = genders[gender];
+                    
                     Object.keys(scores).forEach(key => {
-                        const percentage = scores[key];
-                        if(percentage > 0) {
-                            html += `<div class="bar-segment" style="width: ${percentage}%; background-color: ${colorObj[key]};">${percentage >= 8 ? Math.round(percentage) + '%' : ''}</div>`;
+                        const dataVals = scores[key];
+                        if(dataVals.p > 0) {
+                            // Display formatting: "54% (7)"
+                            let textDisplay = dataVals.p >= 8 ? `${Math.round(dataVals.p)}% (${dataVals.c})` : '';
+                            html += `<div class="bar-segment" style="width: ${dataVals.p}%; background-color: ${colorObj[key]};">${textDisplay}</div>`;
                         }
                     });
                     html += `</div></div>`;
@@ -443,21 +438,18 @@
 
         // --- CONSTRUCT THE DOM ---
 
-        // SLIDE 0: Survey Explained
         let htmlContent = `
             <div class="slide">
                 <h1>Survey Explained</h1>
                 <p style="max-width: 800px; text-align: center; font-size: 1.1rem; line-height: 1.6; color: #d1d8e0;">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
                 <div class="scroll-prompt">Scroll Down 👇</div>
             </div>
         `;
 
-        // Slide 1: Tech Noticed (Reverted to Percentages, no `true` flag passed)
+        // Slide 1
         const techLegend = `
             <div class="legend-item"><div class="color-box" style="background: var(--tech-none)"></div> None</div>
             <div class="legend-item"><div class="color-box" style="background: var(--tech-keycard)"></div> Keycard Scanners</div>
@@ -466,7 +458,7 @@
         `;
         htmlContent += buildSlideHTML("Which surveillance tech have you noticed?", techLegend, techData, techColors);
 
-        // Slide 2: Camera Counts (ACCORDION)
+        // Slide 2
         const camLegend = `
             <div class="legend-item"><div class="color-box" style="background: var(--cam-0)"></div> 0 Cameras</div>
             <div class="legend-item"><div class="color-box" style="background: var(--cam-1)"></div> 1-5</div>
@@ -477,7 +469,7 @@
         `;
         htmlContent += buildAccordionSlide("Estimated Cameras by Location", camLegend, camDataAll, camColors);
 
-        // Slides 3+: Likert Scales
+        // Slides 3+
         const likertLegend = `
             <div class="legend-item"><div class="color-box" style="background: var(--color-1)"></div> 1 (Strongly Disagree)</div>
             <div class="legend-item"><div class="color-box" style="background: var(--color-2)"></div> 2</div>
@@ -489,7 +481,7 @@
             htmlContent += buildSlideHTML(question, likertLegend, likertData[question], likertColors);
         });
 
-        // Second to Last Slide: Change in Feeling
+        // Change in Feeling
         const changeLegend = `
             <div class="legend-item"><div class="color-box" style="background: var(--change-much-more)"></div> Much more comfortable</div>
             <div class="legend-item"><div class="color-box" style="background: var(--change-slightly-more)"></div> Slightly more</div>
@@ -498,7 +490,7 @@
         `;
         htmlContent += buildSlideHTML("Does knowing the actual number (8 cameras) change how you feel?", changeLegend, changeData, changeColors);
 
-        // Final Slide: Interactive Bubbles
+        // Interactive Bubbles
         htmlContent += `<div class="slide" style="background: radial-gradient(circle, #2b323c 0%, #1a1e23 100%);">
                             <h1>"Additional Thoughts & Concerns"</h1>
                             <p style="margin-bottom: 20px; color: #aaa;">Click any thought to read the full quote</p>
@@ -517,7 +509,6 @@
 
         scroller.innerHTML = htmlContent;
 
-        // Trigger animations on scroll
         const slides = document.querySelectorAll('.slide');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
