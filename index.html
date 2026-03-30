@@ -31,7 +31,8 @@
             --change-much-more: #06d6a0; 
             --change-slightly-more: #83e377; 
             --change-no: #ffd166; 
-            --change-slightly-less: #f78c6b; 
+            --change-slightly-less: #f78c6b;
+            --change-much-less: #d62828; 
 
             --bubble-bg: rgba(255, 255, 255, 0.1);
             --bubble-border: rgba(255, 255, 255, 0.2);
@@ -147,22 +148,31 @@
 
         /* --- BUBBLE CLOUD STYLES --- */
         .bubble-container {
-            position: relative; width: 100%; max-width: 1000px; padding: 40px 20px 80px 20px; 
-            display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px;
+            position: relative; width: 100%; max-width: 1200px;
+            display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 10px;
+            margin-top: 10px; padding: 0 20px;
         }
         .bubble {
-            background: var(--bubble-bg); border: 1px solid var(--bubble-border); padding: 15px 25px;
-            border-radius: 50px; font-size: 0.95rem; text-align: center; backdrop-filter: blur(5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2); opacity: 0; transform: scale(0.5) translateY(20px);
+            background: var(--bubble-bg); border: 1px solid var(--bubble-border); 
+            padding: 10px 18px; 
+            border-radius: 50px; font-size: 0.85rem; text-align: center; backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); opacity: 0; transform: scale(0.5) translateY(20px);
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); animation: float 4s ease-in-out infinite alternate;
-            cursor: pointer;
+            cursor: pointer; max-width: 250px; line-height: 1.3;
         }
         .bubble:hover {
             background: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.6);
             transform: scale(1.05) translateY(0) !important; z-index: 100;
         }
         .animate-in .bubble { opacity: 1; transform: scale(1) translateY(0); }
-        @keyframes float { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
+        @keyframes float { 0% { transform: translateY(0px); } 100% { transform: translateY(-8px); } }
+
+        .gender-icon {
+            display: inline-block;
+            margin-right: 5px;
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
 
         /* --- MODAL (POPUP) STYLES --- */
         .modal-overlay {
@@ -184,7 +194,7 @@
         }
         .modal-close:hover { color: #fff; }
         .modal-gender { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-4); margin-bottom: 15px; font-weight: bold; }
-        .modal-quote { font-size: 1.2rem; line-height: 1.6; color: #fff; font-style: italic; }
+        .modal-quote { font-size: 1.1rem; line-height: 1.6; color: #fff; font-style: italic; max-height: 50vh; overflow-y: auto;}
     </style>
 </head>
 <body>
@@ -193,17 +203,44 @@
         <div class="nav-brand">Osgoode Surveillance Study</div>
         <div class="nav-links">
             <button class="nav-link active" onclick="switchPage('survey-results')">Survey Results</button>
-            <button class="nav-link" onclick="switchPage('results-explained')">Results Explained</button>
+            <button class="nav-link" onclick="switchPage('survey-design')">Survey Design</button>
             <button class="nav-link" onclick="switchPage('background-research')">Background Research</button>
         </div>
     </nav>
 
     <div id="survey-results" class="page-view active"></div>
 
-    <div id="results-explained" class="page-view">
+    <div id="survey-design" class="page-view">
         <div class="standard-content">
-            <h1>Results Explained</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula.</p>
+            <h1>Methodology & Survey Design</h1>
+            <p>The survey consisted of two parts, and participants were specifically current Osgoode students.</p>
+
+            <h2>Part 1: Demographic Information</h2>
+            <p>The first part collected demographic information such as gender, ethnicity, religious practice, age group, and time spent in the building. Although the main focus of the study is on gendered perspectives of surveillance, we included additional demographic questions in order to capture a wider range of interpretations and experiences.</p>
+
+            <h3>Inclusive Design Choices</h3>
+            <p>In designing this section, we incorporated ideas from the article <a href="https://uxdesign.cc/designing-forms-for-gender-diversity-and-inclusion-d8194cf1f51" target="_blank" style="color: var(--color-4); text-decoration: none; border-bottom: 1px dotted var(--color-4);">“Designing Forms for Gender Diversity and Inclusion”</a> to create more inclusive questions. This included making the survey anonymous, providing a “prefer not to say” option to keep responses voluntary, and including a customizable option for more complex identities. Through this approach, we were able to include two participants who identified as non-binary. While this number is too small to support meaningful analysis, their participation highlights the possibility of additional gendered perspectives on surveillance that could be explored in future research.</p>
+
+            <p>For the question on gender, we explicitly listed four categories: cisgender male, cisgender female, transgender male, and transgender female. We defined “women” in this study as individuals who self-identify as such, including trans women, following a similar approach used in existing <a href="https://rshare.library.torontomu.ca/articles/report/The_Gendered_Lens_A_report_on_Women_s_Experiences_with_Video_Surveillance_and_Urban_Security_in_Toronto/22728440?file=40378748" target="_blank" style="color: var(--color-4); text-decoration: none; border-bottom: 1px dotted var(--color-4);">research</a> on gendered perspectives of surveillance. Accordingly, both cisgender women and transgender women were grouped under “women,” and the same approach was applied to men. While we recognize that transgender individuals may interpret surveillance differently from cisgender individuals due to their unique experiences, we adopted this approach in light of the small sample size and to reduce the complexity of interpretation.</p>
+
+            <h2>Part 2: Perspectives on Surveillance</h2>
+            <p>The second part of the survey measured participants’ perspectives on surveillance within the building through a series of questions. These included:</p>
+            
+            <ul style="margin-bottom: 20px; color: #d1d8e0; line-height: 1.6;">
+                <li>Rating their level of agreement with specific statements.</li>
+                <li>Estimating the number of cameras in different types of spaces.</li>
+                <li>Recording any changes in attitude before and after being informed of the actual number of cameras in the building.</li>
+                <li>Identifying the types of surveillance technologies they had noticed, such as cameras, keycard scanners, and posted monitoring signage.</li>
+            </ul>
+
+            <h3>Assessing Attitudes</h3>
+            <p>The goal of this section was to assess participants’ overall attitudes toward surveillance. By asking a series of questions framed in different ways, we aimed to break down participants’ responses and gain deeper insight into both their conscious and unconscious attitudes toward surveillance. We intentionally limited the number of written-response questions to encourage higher participation.</p>
+
+            <p>Specifically, the survey included only one written-response question at the end, which invited participants to share any additional thoughts. This open-ended question was intended to capture further perspectives in case earlier sections did not fully reflect participants’ views. Two guiding questions were provided to give participants direction aligned with the goals of the study, while also offering structure for those who wished to contribute more detailed responses.</p> 
+            
+            <p>Additionally, we designed the questions to be as simple and clear as possible to reduce the effort required to complete the survey. In developing this section, we followed recommendations from this <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9765912/" target="_blank" style="color: var(--color-4); text-decoration: none; border-bottom: 1px dotted var(--color-4);">paper</a> to make the survey more accessible and easier for all participants to complete.</p>
+        </div>
+    </div>
         </div>
     </div>
 
@@ -255,9 +292,17 @@
             }
         }
 
+        // Helper for Gender Icon
+        function getGenderIcon(gender) {
+            if(gender.toLowerCase().includes('female')) return '♀️';
+            if(gender.toLowerCase().includes('male')) return '♂️';
+            return '⚧️';
+        }
+
         // Modal Pop-Up Logic
         function openModal(gender, fullQuote) {
-            document.getElementById('modalGender').innerText = gender;
+            const icon = getGenderIcon(gender);
+            document.getElementById('modalGender').innerHTML = `<span class="gender-icon">${icon}</span> ${gender}`;
             document.getElementById('modalQuote').innerText = `"${fullQuote}"`;
             document.getElementById('quoteModal').classList.add('active');
         }
@@ -265,115 +310,80 @@
             document.getElementById('quoteModal').classList.remove('active');
         }
 
-        // --- NEW DATA FORMAT: { "p": percentage, "c": count } ---
+        // --- SURVEY DATA ---
 
-        // DATA 1: Tech Noticed
         const techData = {
-          "Cisgender Female": {"Cameras": {"p": 35.7, "c": 15}, "Keycard": {"p": 57.1, "c": 24}, "None": {"p": 4.8, "c": 2}, "Signs": {"p": 2.4, "c": 1}},
-          "Cisgender Male": {"Cameras": {"p": 42.9, "c": 6}, "Keycard": {"p": 42.9, "c": 6}, "None": {"p": 0.0, "c": 0}, "Signs": {"p": 14.3, "c": 2}},
-          "Other Non-Binary Identities": {"Cameras": {"p": 50.0, "c": 1}, "Keycard": {"p": 50.0, "c": 1}, "None": {"p": 0.0, "c": 0}, "Signs": {"p": 0.0, "c": 0}}
+            "Cisgender Female": {"Cameras": {"p": 35.3, "c": 18}, "Keycard": {"p": 54.9, "c": 28}, "None": {"p": 3.9, "c": 2}, "Signs": {"p": 5.9, "c": 3}}, 
+            "Cisgender Male": {"Cameras": {"p": 43.8, "c": 14}, "Keycard": {"p": 40.6, "c": 13}, "None": {"p": 0.0, "c": 0}, "Signs": {"p": 15.6, "c": 5}}, 
+            "Other Non-Binary Identities": {"Cameras": {"p": 50.0, "c": 2}, "Keycard": {"p": 50.0, "c": 2}, "None": {"p": 0.0, "c": 0}, "Signs": {"p": 0.0, "c": 0}}
         };
         const techColors = {"None": "var(--tech-none)", "Keycard": "var(--tech-keycard)", "Cameras": "var(--tech-cameras)", "Signs": "var(--tech-signs)"};
 
-        // DATA 2: Camera Counts
         const camDataAll = {
-            "Hallways": {
-                "Cisgender Female": {"0": {"p": 3.8, "c": 1}, "1-5": {"p": 65.4, "c": 17}, "11-20": {"p": 7.7, "c": 2}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 23.1, "c": 6}},
-                "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 42.9, "c": 3}, "11-20": {"p": 28.6, "c": 2}, "21-30": {"p": 14.3, "c": 1}, "6-10": {"p": 14.3, "c": 1}},
-                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 0.0, "c": 0}, "11-20": {"p": 100.0, "c": 1}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}
-            },
-            "Washrooms": {
-                "Cisgender Female": {"0": {"p": 96.2, "c": 25}, "1-5": {"p": 3.8, "c": 1}},
-                "Cisgender Male": {"0": {"p": 85.7, "c": 6}, "1-5": {"p": 14.3, "c": 1}},
-                "Other Non-Binary Identities": {"0": {"p": 100.0, "c": 1}, "1-5": {"p": 0.0, "c": 0}}
-            },
-            "Library": {
-                "Cisgender Female": {"0": {"p": 3.8, "c": 1}, "1-5": {"p": 57.7, "c": 15}, "11-20": {"p": 7.7, "c": 2}, "21-30": {"p": 7.7, "c": 2}, "6-10": {"p": 23.1, "c": 6}},
-                "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 42.9, "c": 3}, "11-20": {"p": 28.6, "c": 2}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 28.6, "c": 2}},
-                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 100.0, "c": 1}}
-            },
-            "Prayer Rooms": {
-                "Cisgender Female": {"0": {"p": 76.9, "c": 20}, "1-5": {"p": 23.1, "c": 6}},
-                "Cisgender Male": {"0": {"p": 57.1, "c": 4}, "1-5": {"p": 42.9, "c": 3}},
-                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 1}}
-            },
-            "Common Areas": {
-                "Cisgender Female": {"0": {"p": 7.7, "c": 2}, "1-5": {"p": 46.2, "c": 12}, "11-20": {"p": 15.4, "c": 4}, "21-30": {"p": 7.7, "c": 2}, "6-10": {"p": 23.1, "c": 6}},
-                "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 28.6, "c": 2}, "11-20": {"p": 14.3, "c": 1}, "21-30": {"p": 14.3, "c": 1}, "6-10": {"p": 42.9, "c": 3}},
-                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 1}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}
-            },
-            "Classrooms": {
-                "Cisgender Female": {"0": {"p": 15.4, "c": 4}, "1-5": {"p": 53.8, "c": 14}, "1-5;6-10": {"p": 3.8, "c": 1}, "11-20": {"p": 11.5, "c": 3}, "21-30": {"p": 3.8, "c": 1}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 11.5, "c": 3}},
-                "Cisgender Male": {"0": {"p": 28.6, "c": 2}, "1-5": {"p": 42.9, "c": 3}, "1-5;6-10": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "31-40": {"p": 14.3, "c": 1}, "6-10": {"p": 14.3, "c": 1}},
-                "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 1}, "1-5;6-10": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}
-            }
+            "Hallways": {"Cisgender Female": {"0": {"p": 3.2, "c": 1}, "1-5": {"p": 67.7, "c": 21}, "11-20": {"p": 6.5, "c": 2}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 22.6, "c": 7}}, "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 46.7, "c": 7}, "11-20": {"p": 20.0, "c": 3}, "21-30": {"p": 6.7, "c": 1}, "6-10": {"p": 26.7, "c": 4}}, "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 50.0, "c": 1}, "11-20": {"p": 50.0, "c": 1}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}}, 
+            "Washrooms": {"Cisgender Female": {"0": {"p": 93.5, "c": 29}, "1-5": {"p": 6.5, "c": 2}}, "Cisgender Male": {"0": {"p": 93.3, "c": 14}, "1-5": {"p": 6.7, "c": 1}}, "Other Non-Binary Identities": {"0": {"p": 100.0, "c": 2}, "1-5": {"p": 0.0, "c": 0}}}, 
+            "Library": {"Cisgender Female": {"0": {"p": 3.2, "c": 1}, "1-5": {"p": 58.1, "c": 18}, "11-20": {"p": 9.7, "c": 3}, "21-30": {"p": 6.5, "c": 2}, "6-10": {"p": 22.6, "c": 7}}, "Cisgender Male": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 33.3, "c": 5}, "11-20": {"p": 40.0, "c": 6}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 26.7, "c": 4}}, "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 50.0, "c": 1}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "6-10": {"p": 50.0, "c": 1}}}, 
+            "Prayer Rooms": {"Cisgender Female": {"0": {"p": 74.2, "c": 23}, "1-5": {"p": 25.8, "c": 8}}, "Cisgender Male": {"0": {"p": 53.3, "c": 8}, "1-5": {"p": 46.7, "c": 7}}, "Other Non-Binary Identities": {"0": {"p": 50.0, "c": 1}, "1-5": {"p": 50.0, "c": 1}}}, 
+            "Common Areas": {"Cisgender Female": {"0": {"p": 6.5, "c": 2}, "1-5": {"p": 41.9, "c": 13}, "11-20": {"p": 12.9, "c": 4}, "21-30": {"p": 6.5, "c": 2}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 32.3, "c": 10}}, "Cisgender Male": {"0": {"p": 6.7, "c": 1}, "1-5": {"p": 20.0, "c": 3}, "11-20": {"p": 20.0, "c": 3}, "21-30": {"p": 13.3, "c": 2}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 40.0, "c": 6}}, "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 2}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}}, 
+            "Classrooms": {"Cisgender Female": {"0": {"p": 12.9, "c": 4}, "1-5": {"p": 54.8, "c": 17}, "1-5;6-10": {"p": 3.2, "c": 1}, "11-20": {"p": 12.9, "c": 4}, "21-30": {"p": 3.2, "c": 1}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 12.9, "c": 4}}, "Cisgender Male": {"0": {"p": 26.7, "c": 4}, "1-5": {"p": 46.7, "c": 7}, "1-5;6-10": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "31-40": {"p": 6.7, "c": 1}, "6-10": {"p": 20.0, "c": 3}}, "Other Non-Binary Identities": {"0": {"p": 0.0, "c": 0}, "1-5": {"p": 100.0, "c": 2}, "1-5;6-10": {"p": 0.0, "c": 0}, "11-20": {"p": 0.0, "c": 0}, "21-30": {"p": 0.0, "c": 0}, "31-40": {"p": 0.0, "c": 0}, "6-10": {"p": 0.0, "c": 0}}}
         };
         const camColors = {"0": "var(--cam-0)", "1-5": "var(--cam-1)", "6-10": "var(--cam-6)", "11-20": "var(--cam-11)", "21-30": "var(--cam-21)", "31-40": "var(--cam-31)", "1-5;6-10": "var(--cam-6)"};
 
-        // DATA 3: Likert Scales
         const likertData = {
-          "I feel comfortable with security cameras at building entrances.": {
-            "Cisgender Female": {"1": {"p": 0.0, "c": 0}, "2": {"p": 7.7, "c": 2}, "3": {"p": 11.5, "c": 3}, "4": {"p": 26.9, "c": 7}, "5": {"p": 53.8, "c": 14}},
-            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 28.6, "c": 2}, "5": {"p": 71.4, "c": 5}},
-            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 100.0, "c": 1}}
-          },
-          "Security cameras in hallways are appropriate.": {
-            "Cisgender Female": {"1": {"p": 3.8, "c": 1}, "2": {"p": 11.5, "c": 3}, "3": {"p": 23.1, "c": 6}, "4": {"p": 26.9, "c": 7}, "5": {"p": 34.6, "c": 9}},
-            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 28.6, "c": 2}, "4": {"p": 28.6, "c": 2}, "5": {"p": 28.6, "c": 2}},
-            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 100.0, "c": 1}}
-          },
-          "Cameras near stairwells or exits are acceptable.": {
-            "Cisgender Female": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 19.2, "c": 5}, "4": {"p": 34.6, "c": 9}, "5": {"p": 46.2, "c": 12}},
-            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 28.6, "c": 2}, "5": {"p": 71.4, "c": 5}},
-            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 100.0, "c": 1}}
-          },
-          "Cameras should not be placed near private spaces.": {
-            "Cisgender Female": {"1": {"p": 3.8, "c": 1}, "2": {"p": 3.8, "c": 1}, "3": {"p": 11.5, "c": 3}, "4": {"p": 23.1, "c": 6}, "5": {"p": 57.7, "c": 15}},
-            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 28.6, "c": 2}, "4": {"p": 0.0, "c": 0}, "5": {"p": 57.1, "c": 4}},
-            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 100.0, "c": 1}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}
-          },
-          "I worry about how surveillance footage might be used or stored.": {
-            "Cisgender Female": {"1": {"p": 7.7, "c": 2}, "2": {"p": 15.4, "c": 4}, "3": {"p": 26.9, "c": 7}, "4": {"p": 34.6, "c": 9}, "5": {"p": 15.4, "c": 4}},
-            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 14.3, "c": 1}, "4": {"p": 42.9, "c": 3}, "5": {"p": 28.6, "c": 2}},
-            "Other Non-Binary Identities": {"1": {"p": 100.0, "c": 1}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}
-          },
-          "Surveillance cameras in schools make me feel like my privacy is being invaded.": {
-            "Cisgender Female": {"1": {"p": 26.9, "c": 7}, "2": {"p": 26.9, "c": 7}, "3": {"p": 26.9, "c": 7}, "4": {"p": 19.2, "c": 5}, "5": {"p": 0.0, "c": 0}},
-            "Cisgender Male": {"1": {"p": 14.3, "c": 1}, "2": {"p": 42.9, "c": 3}, "3": {"p": 28.6, "c": 2}, "4": {"p": 14.3, "c": 1}, "5": {"p": 0.0, "c": 0}},
-            "Other Non-Binary Identities": {"1": {"p": 100.0, "c": 1}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}
-          },
-          "Overall, the presence of surveillance cameras makes me feel safer in the building.": {
-            "Cisgender Female": {"1": {"p": 3.8, "c": 1}, "2": {"p": 15.4, "c": 4}, "3": {"p": 30.8, "c": 8}, "4": {"p": 38.5, "c": 10}, "5": {"p": 11.5, "c": 3}},
-            "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 14.3, "c": 1}, "3": {"p": 42.9, "c": 3}, "4": {"p": 14.3, "c": 1}, "5": {"p": 28.6, "c": 2}},
-            "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 100.0, "c": 1}, "5": {"p": 0.0, "c": 0}}
-          }
+            "I feel comfortable with security cameras at building entrances.": {"Cisgender Female": {"1": {"p": 0.0, "c": 0}, "2": {"p": 9.7, "c": 3}, "3": {"p": 16.1, "c": 5}, "4": {"p": 22.6, "c": 7}, "5": {"p": 51.6, "c": 16}}, "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 33.3, "c": 5}, "5": {"p": 66.7, "c": 10}}, "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 100.0, "c": 2}}}, 
+            "Security cameras in hallways are appropriate.": {"Cisgender Female": {"1": {"p": 3.2, "c": 1}, "2": {"p": 9.7, "c": 3}, "3": {"p": 25.8, "c": 8}, "4": {"p": 29.0, "c": 9}, "5": {"p": 32.3, "c": 10}}, "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 13.3, "c": 2}, "3": {"p": 13.3, "c": 2}, "4": {"p": 46.7, "c": 7}, "5": {"p": 26.7, "c": 4}}, "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 50.0, "c": 1}, "4": {"p": 0.0, "c": 0}, "5": {"p": 50.0, "c": 1}}}, 
+            "Cameras near stairwells or exits are acceptable.": {"Cisgender Female": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 25.8, "c": 8}, "4": {"p": 32.3, "c": 10}, "5": {"p": 41.9, "c": 13}}, "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 0.0, "c": 0}, "4": {"p": 33.3, "c": 5}, "5": {"p": 66.7, "c": 10}}, "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 50.0, "c": 1}, "4": {"p": 0.0, "c": 0}, "5": {"p": 50.0, "c": 1}}}, 
+            "Cameras should not be placed near private spaces.": {"Cisgender Female": {"1": {"p": 6.5, "c": 2}, "2": {"p": 3.2, "c": 1}, "3": {"p": 9.7, "c": 3}, "4": {"p": 19.4, "c": 6}, "5": {"p": 61.3, "c": 19}}, "Cisgender Male": {"1": {"p": 6.7, "c": 1}, "2": {"p": 6.7, "c": 1}, "3": {"p": 20.0, "c": 3}, "4": {"p": 26.7, "c": 4}, "5": {"p": 40.0, "c": 6}}, "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 50.0, "c": 1}, "4": {"p": 0.0, "c": 0}, "5": {"p": 50.0, "c": 1}}}, 
+            "I worry about how surveillance footage might be used or stored.": {"Cisgender Female": {"1": {"p": 9.7, "c": 3}, "2": {"p": 12.9, "c": 4}, "3": {"p": 22.6, "c": 7}, "4": {"p": 35.5, "c": 11}, "5": {"p": 19.4, "c": 6}}, "Cisgender Male": {"1": {"p": 20.0, "c": 3}, "2": {"p": 20.0, "c": 3}, "3": {"p": 6.7, "c": 1}, "4": {"p": 33.3, "c": 5}, "5": {"p": 20.0, "c": 3}}, "Other Non-Binary Identities": {"1": {"p": 50.0, "c": 1}, "2": {"p": 0.0, "c": 0}, "3": {"p": 50.0, "c": 1}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}}, 
+            "Surveillance cameras in schools make me feel like my privacy is being invaded.": {"Cisgender Female": {"1": {"p": 25.8, "c": 8}, "2": {"p": 22.6, "c": 7}, "3": {"p": 25.8, "c": 8}, "4": {"p": 22.6, "c": 7}, "5": {"p": 3.2, "c": 1}}, "Cisgender Male": {"1": {"p": 20.0, "c": 3}, "2": {"p": 46.7, "c": 7}, "3": {"p": 20.0, "c": 3}, "4": {"p": 13.3, "c": 2}, "5": {"p": 0.0, "c": 0}}, "Other Non-Binary Identities": {"1": {"p": 50.0, "c": 1}, "2": {"p": 50.0, "c": 1}, "3": {"p": 0.0, "c": 0}, "4": {"p": 0.0, "c": 0}, "5": {"p": 0.0, "c": 0}}}, 
+            "Overall, the presence of surveillance cameras makes me feel safer in the building.": {"Cisgender Female": {"1": {"p": 3.2, "c": 1}, "2": {"p": 16.1, "c": 5}, "3": {"p": 32.3, "c": 10}, "4": {"p": 35.5, "c": 11}, "5": {"p": 12.9, "c": 4}}, "Cisgender Male": {"1": {"p": 0.0, "c": 0}, "2": {"p": 20.0, "c": 3}, "3": {"p": 26.7, "c": 4}, "4": {"p": 20.0, "c": 3}, "5": {"p": 33.3, "c": 5}}, "Other Non-Binary Identities": {"1": {"p": 0.0, "c": 0}, "2": {"p": 0.0, "c": 0}, "3": {"p": 50.0, "c": 1}, "4": {"p": 50.0, "c": 1}, "5": {"p": 0.0, "c": 0}}}
         };
         const likertColors = {"1": "var(--color-1)", "2": "var(--color-2)", "3": "var(--color-3)", "4": "var(--color-4)", "5": "var(--color-5)"};
 
-        // DATA 4: Change in Feeling
         const changeData = {
-          "Cisgender Female": {"Much more comfortable": {"p": 3.8, "c": 1}, "No change": {"p": 42.3, "c": 11}, "Slightly less comfortable": {"p": 15.4, "c": 4}, "Slightly more comfortable": {"p": 38.5, "c": 10}},
-          "Cisgender Male": {"Much more comfortable": {"p": 14.3, "c": 1}, "No change": {"p": 42.9, "c": 3}, "Slightly less comfortable": {"p": 14.3, "c": 1}, "Slightly more comfortable": {"p": 28.6, "c": 2}},
-          "Other Non-Binary Identities": {"Much more comfortable": {"p": 0.0, "c": 0}, "No change": {"p": 100.0, "c": 1}, "Slightly less comfortable": {"p": 0.0, "c": 0}, "Slightly more comfortable": {"p": 0.0, "c": 0}}
+            "Cisgender Female": {"Much less comfortable": {"p": 3.2, "c": 1}, "Much more comfortable": {"p": 3.2, "c": 1}, "No change": {"p": 45.2, "c": 14}, "Slightly less comfortable": {"p": 16.1, "c": 5}, "Slightly more comfortable": {"p": 32.3, "c": 10}}, 
+            "Cisgender Male": {"Much less comfortable": {"p": 0.0, "c": 0}, "Much more comfortable": {"p": 6.7, "c": 1}, "No change": {"p": 66.7, "c": 10}, "Slightly less comfortable": {"p": 6.7, "c": 1}, "Slightly more comfortable": {"p": 20.0, "c": 3}}, 
+            "Other Non-Binary Identities": {"Much less comfortable": {"p": 0.0, "c": 0}, "Much more comfortable": {"p": 0.0, "c": 0}, "No change": {"p": 100.0, "c": 2}, "Slightly less comfortable": {"p": 0.0, "c": 0}, "Slightly more comfortable": {"p": 0.0, "c": 0}}
         };
-        const changeColors = { "Much more comfortable": "var(--change-much-more)", "Slightly more comfortable": "var(--change-slightly-more)", "No change": "var(--change-no)", "Slightly less comfortable": "var(--change-slightly-less)" };
+        const changeColors = { 
+            "Much more comfortable": "var(--change-much-more)", 
+            "Slightly more comfortable": "var(--change-slightly-more)", 
+            "No change": "var(--change-no)", 
+            "Slightly less comfortable": "var(--change-slightly-less)",
+            "Much less comfortable": "var(--change-much-less)" 
+        };
 
-        // --- Qualitative Quotes ---
         const feedbackData = [
-          {"gender": "Cisgender Male", "fullQuote": "I think key cards and some cctv is appropriate, but not near bathrooms or other private spaces", "snippet": "Appropriate, but not near bathrooms..."},
-          {"gender": "Cisgender Female", "fullQuote": "There should not be cameras in the bathrooms", "snippet": "No cameras in bathrooms"},
-          {"gender": "Cisgender Female", "fullQuote": "Perhaps I would feel better if there was transparency about where surveillance technologies are placed and how that information is being stored...", "snippet": "I would prefer a publicly available guide for transparency"},
-          {"gender": "Other Non-Binary Identities", "fullQuote": "(1) cameras are the most appropriate imo (2) should not be used in private spaces (like bathrooms) but near them is acceptable", "snippet": "Should not be used in private spaces"},
-          {"gender": "Cisgender Female", "fullQuote": "I believe keycards are the most appropriate, since they can physically block unauthorized access to the university facilities as opposed to deterrence-focused methods like security cameras.", "snippet": "Keycards can physically block unauthorized access"},
-          {"gender": "Cisgender Male", "fullQuote": "1) most appropriate at building entrances and at keycard access points\n2) there should never be any cameras in bathrooms", "snippet": "Never in bathrooms"},
-          {"gender": "Cisgender Female", "fullQuote": "1) I think surveillance is most appropriate outside the building (ie entrances, near stairwells)\n2) Surveillance should never be used near spaces where students are in more vulnerable positions...", "snippet": "Less comfortable if recorded during lectures"}
+            {"gender": "Cisgender Male", "fullQuote": "I think key cards and some cctv is appropriate, but not near bathrooms or other private spaces", "snippet": "...some cctv is appropriate, but not near bathrooms..."}, 
+            {"gender": "Cisgender Female", "fullQuote": "There should not be cameras in the bathrooms", "snippet": "There should not be cameras in the bathrooms"}, 
+            {"gender": "Cisgender Female", "fullQuote": "Perhaps I would feel better if there was transparency about where surveillance technologies are placed and how that information is being stored. I suppose I don't trust the University's discretion and would prefer a publicly available guide/report that could be accessed easily for transparency.", "snippet": "Perhaps I would feel better if there was transparency..."}, 
+            {"gender": "Other Non-Binary Identities", "fullQuote": "(1) cameras are the most appropriate imo (2) should not be used in private spaces (like bathrooms) but near them is acceptable", "snippet": "...should not be used in private spaces..."}, 
+            {"gender": "Cisgender Female", "fullQuote": "I believe keycards are the most appropriate, since they can physically block unauthorized access to the university facilities as opposed to deterrence-focused methods like security cameras.", "snippet": "I believe keycards are the most appropriate..."}, 
+            {"gender": "Cisgender Male", "fullQuote": "I thought there was a lot more cameras around, I wish there was more", "snippet": "I thought there was a lot more cameras around..."}, 
+            {"gender": "Cisgender Female", "fullQuote": "I think surveillance tech is appropriate in high traffic areas, especially to help make women feel safer at Osgoode. Last year in my section we had someone sending death and rape threats to women consistently throughout the year which made the women in my section feel unsafe. there was an incident where an attack was caught on camera and i believe that helped figure out who it was. to me the ability to look at CCTV helped me feel safer in that situation. however, i do not like the key card access requirements as they make osgoode feel a bit like a prison. because our cards are only virtual you also have to go everywhere with your phone which also makes me feel tracked unnecessarily.\n\ni believe cameras should never be used in washrooms because people need to change in between classes and events and use the toilet", "snippet": "...especially to help make women feel safer at Osgoode."}, 
+            {"gender": "Cisgender Male", "fullQuote": "1. At entrances to the building\n2. In washroom", "snippet": "1. At entrances... 2. In washroom"}, 
+            {"gender": "Cisgender Female", "fullQuote": "1) near entrances and exits\n2) never in bathrooms.", "snippet": "...never in bathrooms."}, 
+            {"gender": "Cisgender Male", "fullQuote": "(1) most appropriate at building entrances and at keycard access points \n(2) there should never be any cameras in bathrooms", "snippet": "...there should never be any cameras in bathrooms"}, 
+            {"gender": "Cisgender Male", "fullQuote": "1 I believe they are most appropriate in publicly-accessible areas (enterance, hallways) as they are useful to understand the comings and goings of non-students. Osgoode has had repeated incidents of members of the public (I.e. CLASP clients, unhoused/mentally unwell individuals) entering the premises and becoming disruptive or accessing parts of the building not meant for public access (some slept in professor’s offices over the summer) and a baseline level of security is necessary to catch things like this\n\n2 Washrooms, prayer rooms, offices, and classrooms feel unnecessarily invasive and do little to establish the information necessary to be aware of people’s comings and goings. It is worthwhile to know who is where, but continually monitoring them as they go about their business is unnecessary", "snippet": "...useful to understand the comings and goings of non-students."}, 
+            {"gender": "Cisgender Male", "fullQuote": "2) classrooms / offices … 1) library & large areas of gathering", "snippet": "...classrooms / offices... library & large areas..."}, 
+            {"gender": "Cisgender Female", "fullQuote": "(1) although privacy is important inside the rooms itself (washroom, prayer room), those areas are vulnerable to attacks. cameras that capture who comes in/outs would help.", "snippet": "...cameras that capture who comes in/outs would help."}, 
+            {"gender": "Cisgender Female", "fullQuote": "1) I think surveillance is most appropriate outside the building (ie entrances, near stairwells)\n\n2) Surveillance should never be used near spaces where students are in more vulnerable positions (bathrooms, prayer rooms). I also don't think cameras should be placed in classrooms. I know I would feel less comfortable at school if I knew I was being recorded during lectures or class time.", "snippet": "...less comfortable at school if I knew I was being recorded..."}, 
+            {"gender": "Cisgender Female", "fullQuote": "(1) the entrances; (2) private spaces where there is a reasonable expectation of privacy like washrooms, private study rooms, prayer rooms", "snippet": "...a reasonable expectation of privacy like washrooms..."}, 
+            {"gender": "Cisgender Female", "fullQuote": "They should never be used in a washroom.", "snippet": "They should never be used in a washroom."}, 
+            {"gender": "Cisgender Male", "fullQuote": "No concerns", "snippet": "No concerns"}, 
+            {"gender": "Cisgender Female", "fullQuote": "The actual number of cameras was way less than I had assumed. On one hand it makes me feel less safe because we get a lot of alerts about crime on campus, but on the other hand I've never heard to any issues at Osgoode requiring camera footage or that identification from cameras has ever solved an issue. If the cameras aren't helpful then I find them invasive - but I have no idea how helpful they are.\n\nThe card scanners make sense to me! I don't really have an issue with those in terms of privacy.", "snippet": "If the cameras aren't helpful then I find them invasive..."}, 
+            {"gender": "Cisgender Male", "fullQuote": "1) the most appropriate places would be places that are open to the public\n2) In areas that are private such as washrooms, meditation rooms and prayer rooms.", "snippet": "...places that are open to the public..."}, 
+            {"gender": "Cisgender Male", "fullQuote": "1 They are fine by the entrances but elsewhere it’s probably not really necessary. \n2 Near bathrooms and prayer rooms definitely.", "snippet": "...elsewhere it’s probably not really necessary."}
         ];
+
+        const techOrder = ["None", "Keycard", "Cameras", "Signs"];
+        const camOrder = ["0", "1-5", "1-5;6-10", "6-10", "11-20", "21-30", "31-40"];
+        const likertOrder = ["1", "2", "3", "4", "5"];
+        const changeOrder = ["Much more comfortable", "Slightly more comfortable", "No change", "Slightly less comfortable", "Much less comfortable"];
 
         const scroller = document.getElementById('survey-results');
         
-        // --- RENDER FUNCTIONS UPDATED TO PARSE BOTH % AND COUNT ---
-        
-        function buildSlideHTML(title, legendHTML, dataObj, colorObj) {
+        function buildSlideHTML(title, legendHTML, dataObj, colorObj, orderArray = null) {
             let html = `
                 <div class="slide">
                     <h1>${title}</h1>
@@ -384,10 +394,11 @@
                 html += `<div class="gender-row"><div class="gender-label">${gender}</div><div class="stacked-bar-container">`;
                 const scores = dataObj[gender];
                 
-                Object.keys(scores).forEach(key => {
+                const keysToIterate = orderArray ? orderArray : Object.keys(scores);
+                
+                keysToIterate.forEach(key => {
                     const dataVals = scores[key];
-                    if(dataVals.p > 0) {
-                        // Display formatting: "54% (7)"
+                    if(dataVals && dataVals.p > 0) {
                         let textDisplay = dataVals.p >= 8 ? `${Math.round(dataVals.p)}% (${dataVals.c})` : '';
                         html += `<div class="bar-segment" style="--target-width: ${dataVals.p}%; background-color: ${colorObj[key]};">${textDisplay}</div>`;
                     }
@@ -397,9 +408,9 @@
             return html + `</div><div class="scroll-prompt">Scroll Next 👇</div></div>`;
         }
 
-        function buildAccordionSlide(title, legendHTML, dataObjAll, colorObj) {
+        function buildAccordionSlide(title, legendHTML, dataObjAll, colorObj, orderArray = null) {
             let html = `
-                <div class="slide">
+                <div class="slide" style="padding-top: 40px; padding-bottom: 40px;">
                     <h1>${title}</h1>
                     <div class="accordion-container">
             `;
@@ -419,10 +430,11 @@
                     html += `<div class="gender-row"><div class="gender-label" style="opacity:1; transform:translateX(0); width:200px; text-align:right;">${gender}</div><div class="stacked-bar-container">`;
                     const scores = genders[gender];
                     
-                    Object.keys(scores).forEach(key => {
+                    const keysToIterate = orderArray ? orderArray : Object.keys(scores);
+
+                    keysToIterate.forEach(key => {
                         const dataVals = scores[key];
-                        if(dataVals.p > 0) {
-                            // Display formatting: "54% (7)"
+                        if(dataVals && dataVals.p > 0) {
                             let textDisplay = dataVals.p >= 8 ? `${Math.round(dataVals.p)}% (${dataVals.c})` : '';
                             html += `<div class="bar-segment" style="width: ${dataVals.p}%; background-color: ${colorObj[key]};">${textDisplay}</div>`;
                         }
@@ -440,11 +452,20 @@
 
         let htmlContent = `
             <div class="slide">
-                <h1>Survey Explained</h1>
-                <p style="max-width: 800px; text-align: center; font-size: 1.1rem; line-height: 1.6; color: #d1d8e0;">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                </p>
+                <h1>Student Perceptions of Surveillance</h1>
+                <div style="max-width: 800px; text-align: center; font-size: 1.1rem; line-height: 1.6; color: #d1d8e0;">
+                    <p>This study examines how students perceive surveillance technologies—such as security cameras and keycard scanners—throughout the Osgoode building.</p>
+                    <p>We asked students what surveillance they have noticed, how many cameras they estimate are present in different spaces, and how comfortable they feel being monitored. Finally, we revealed the actual scope of surveillance to see if it changed their feelings of safety or privacy.</p>
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid var(--bubble-border);">
+                        <h3 style="color: var(--color-4); margin-top: 0; font-size: 1.4rem;">Respondent Demographics</h3>
+                        <p style="margin-bottom: 15px; font-weight: bold; font-size: 1.2rem; color: #fff;">Total Participants: 49</p>
+                        <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 1rem;">
+                            <div><span style="color: #fff; font-weight: bold;">Cisgender Female:</span><br>31 (63.3%)</div>
+                            <div><span style="color: #fff; font-weight: bold;">Cisgender Male:</span><br>16 (32.7%)</div>
+                            <div><span style="color: #fff; font-weight: bold;">Other Non-Binary Identities:</span><br>2 (4.1%)</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="scroll-prompt">Scroll Down 👇</div>
             </div>
         `;
@@ -456,7 +477,7 @@
             <div class="legend-item"><div class="color-box" style="background: var(--tech-cameras)"></div> Cameras</div>
             <div class="legend-item"><div class="color-box" style="background: var(--tech-signs)"></div> Sign-Posted</div>
         `;
-        htmlContent += buildSlideHTML("Which surveillance tech have you noticed?", techLegend, techData, techColors);
+        htmlContent += buildSlideHTML("Which surveillance tech have you noticed?", techLegend, techData, techColors, techOrder);
 
         // Slide 2
         const camLegend = `
@@ -467,7 +488,7 @@
             <div class="legend-item"><div class="color-box" style="background: var(--cam-21)"></div> 21-30</div>
             <div class="legend-item"><div class="color-box" style="background: var(--cam-31)"></div> 31-40</div>
         `;
-        htmlContent += buildAccordionSlide("Estimated Cameras by Location", camLegend, camDataAll, camColors);
+        htmlContent += buildAccordionSlide("Estimated Cameras by Location", camLegend, camDataAll, camColors, camOrder);
 
         // Slides 3+
         const likertLegend = `
@@ -478,30 +499,33 @@
             <div class="legend-item"><div class="color-box" style="background: var(--color-5)"></div> 5 (Strongly Agree)</div>
         `;
         Object.keys(likertData).forEach((question) => {
-            htmlContent += buildSlideHTML(question, likertLegend, likertData[question], likertColors);
+            htmlContent += buildSlideHTML(question, likertLegend, likertData[question], likertColors, likertOrder);
         });
 
         // Change in Feeling
         const changeLegend = `
-            <div class="legend-item"><div class="color-box" style="background: var(--change-much-more)"></div> Much more comfortable</div>
+            <div class="legend-item"><div class="color-box" style="background: var(--change-much-more)"></div> Much more</div>
             <div class="legend-item"><div class="color-box" style="background: var(--change-slightly-more)"></div> Slightly more</div>
             <div class="legend-item"><div class="color-box" style="background: var(--change-no)"></div> No change</div>
-            <div class="legend-item"><div class="color-box" style="background: var(--change-slightly-less)"></div> Slightly less comfortable</div>
+            <div class="legend-item"><div class="color-box" style="background: var(--change-slightly-less)"></div> Slightly less</div>
+            <div class="legend-item"><div class="color-box" style="background: var(--change-much-less)"></div> Much less</div>
         `;
-        htmlContent += buildSlideHTML("Does knowing the actual number (8 cameras) change how you feel?", changeLegend, changeData, changeColors);
+        htmlContent += buildSlideHTML("Does knowing the actual number (8 cameras) change how you feel?", changeLegend, changeData, changeColors, changeOrder);
 
         // Interactive Bubbles
         htmlContent += `<div class="slide" style="background: radial-gradient(circle, #2b323c 0%, #1a1e23 100%);">
                             <h1>"Additional Thoughts & Concerns"</h1>
-                            <p style="margin-bottom: 20px; color: #aaa;">Click any thought to read the full quote</p>
+                            <p style="margin-bottom: 5px; color: #aaa;">Click any thought to read the full quote</p>
                             <div class="bubble-container">`;
         
         feedbackData.forEach((item, index) => {
             const safeQuote = item.fullQuote.replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ');
+            const genderIcon = getGenderIcon(item.gender);
+            
             htmlContent += `<div class="bubble" 
-                                 style="transition-delay: ${index * 0.1}s; animation-delay: ${Math.random() * 2}s;"
+                                 style="transition-delay: ${index * 0.05}s; animation-delay: ${Math.random() * 2}s;"
                                  onclick="openModal('${item.gender}', '${safeQuote}')">
-                                "${item.snippet}"
+                                <span class="gender-icon">${genderIcon}</span> "${item.snippet}"
                             </div>`;
         });
         
