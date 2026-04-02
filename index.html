@@ -199,16 +199,54 @@
 </head>
 <body>
 
-    <nav class="navbar">
+   <nav class="navbar">
         <div class="nav-brand">Osgoode Surveillance Study</div>
         <div class="nav-links">
             <button class="nav-link active" onclick="switchPage('survey-results')">Survey Results</button>
+            <button class="nav-link" onclick="switchPage('analysis')">Analysis</button>
             <button class="nav-link" onclick="switchPage('survey-design')">Survey Design</button>
             <button class="nav-link" onclick="switchPage('background-research')">Background Research</button>
         </div>
     </nav>
 
     <div id="survey-results" class="page-view active"></div>
+<div id="analysis" class="page-view">
+        <div class="standard-content">
+            <h1>Analysis of Results</h1>
+            
+            <p>Before turning to the analysis, it is important to acknowledge that the data is not perfectly proportionate, as there were significantly more female respondents than male. That said, there are still noticeable trends within each group. For the purposes of analysis and this project, and in line with the underlying theory and research, the comparison focuses on female- and male-identifying participants.</p>
+            
+            <h2>Perception vs. Reality</h2>
+            <p>One of the clearest trends is that women tend to perceive fewer cameras across most spaces, while men tend to estimate higher levels of surveillance. For example, in the library, about 58% of women estimated there were between 1-5 cameras. In contrast, men’s responses skewed higher: 27% estimated there were 6-10 cameras, and 40% estimated 11-20. Similar patterns appear in spaces such as prayer rooms and common areas. Most women believed there were no cameras in prayer rooms, while men were more evenly split across different estimates.</p>
+            
+            <p>This raises an important point about perception. Men may be more attuned to, or expect, surveillance infrastructure. For example, one participant noted, <span style="font-style: italic; color: var(--color-3);">“I thought there were a lot more cameras around.”</span> In contrast, women may either underestimate the presence of cameras or interpret these spaces differently, reflecting beliefs that only a limited number of cameras should be present. This aligns with existing research suggesting that surveillance tools are typically designed and operated by men, where women and others are more often positioned as the subjects of observation rather than those in control (Norris & Armstrong; Zuriak pg. 50).</p>
+            
+            <h2>Comfort Levels and Privacy Concerns</h2>
+            <p>When shifting from perception to comfort levels, the results become more complex. At building entrances, most participants overall indicated that they “strongly agree” they are comfortable with cameras. However, women demonstrated a much broader range of responses. Although the overall average appears similar across genders, women’s perspectives are more varied. This finding aligns with researcher Monahan’s argument that surveillance often fails to address the actual harms women experience in public spaces (Monahan, pg 287). If cameras are primarily reactive, used after an incident rather than preventing it, their presence may not translate into a meaningful sense of safety, contributing to ambivalence.</p>
+            
+            <p>This broader range is reflected in other areas as well. For instance, approximately 28% of women did not feel strongly that cameras near stairwells or exits were acceptable, and more women than men reported that surveillance in school settings feels like an invasion of privacy. This suggests an underlying tension: while surveillance is framed as enhancing safety, it simultaneously raises concerns about privacy and bodily monitoring for many women.</p>
+            
+            <h2>Reactions to the Actual Scope of Surveillance</h2>
+            <p>This tension is further evident when participants were informed of the actual number of cameras. While most participants reported “no change” in comfort levels, women’s responses tended to split in two directions: some felt slightly less comfortable, while others felt slightly more comfortable. Drawing on Stark’s theory, the decrease in comfort may be explained by the perception that the number of cameras remains excessive, suggesting a heightened level of observation and control over women’s bodies (Stark, pg 1076).</p>
+            
+            <p>At the same time, those who reported increased comfort may interpret surveillance as providing added security, particularly in spaces perceived as vulnerable. One participant noted that:</p>
+            
+            <blockquote style="border-left: 4px solid var(--color-4); padding-left: 15px; font-style: italic; color: #fff; margin: 20px 0;">
+                “although privacy is important inside the rooms itself (washroom, prayer room), those areas are vulnerable to attacks. cameras that capture who comes in/outs would help.”
+            </blockquote>
+            
+            <p>While not representative of all responses, this highlights that, for some women, safety concerns may justify surveillance, but only in specific and limited contexts.</p>
+            
+            <h2>Context and Normalization</h2>
+            <p>For participants who reported no change, location appears to play a significant role. Cameras on campus are generally placed in expected areas, such as entrances and common spaces, rather than in private areas. As a result, surveillance may feel normalized, even if it is not necessarily welcomed.</p>
+            
+            <p>Additionally, other forms of surveillance, such as key card access systems, were generally more accepted. Participants across genders tended to view these measures as less invasive and more focused on controlling physical access rather than monitoring behaviour.</p>
+            
+            <p>Finally, the context of Osgoode itself may shape these perceptions. As a relatively small and professional school environment, it may foster a greater sense of safety and trust within the community. This context likely influences how surveillance technologies are perceived, particularly in comparison to more public or less familiar spaces such as city streets or large workplaces, as seen in our research.</p>
+            
+            <p>Overall, while the data is not conclusive, the observed trends suggest that gender plays a role in shaping perceptions of surveillance, particularly in relation to privacy, safety, and trust. However, a larger and more balanced sample would be required to draw more definitive conclusions.</p>
+        </div>
+    </div>
 
     <div id="survey-design" class="page-view">
         <div class="standard-content">
@@ -613,7 +651,11 @@
                             </div>`;
         });
         
-        htmlContent += `</div><div class="scroll-prompt">End of Survey Data 🎉</div></div>`;
+     htmlContent += `</div>
+            <button onclick="switchPage('analysis')" style="margin-top: 40px; padding: 15px 30px; font-size: 1.1rem; background-color: var(--color-4); color: #111; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 15px rgba(6, 214, 160, 0.4)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                Read the Data Analysis ➔
+            </button>
+        </div>`;
 
         scroller.innerHTML = htmlContent;
 
