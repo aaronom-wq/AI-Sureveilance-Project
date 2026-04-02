@@ -382,14 +382,27 @@
     </div>
 
     <script>
-        // Tab Navigation Logic
+   // Tab Navigation Logic
         function switchPage(pageId) {
+            // Hide all pages
             document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
+            
+            // Remove active styling from all nav links
             document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+            
+            // Show the selected page
             document.getElementById(pageId).classList.add('active');
-            event.target.classList.add('active');
+            
+            // Find the matching nav link and highlight it
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(pageId)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Scroll to the top of the newly opened page
+            window.scrollTo(0, 0);
         }
-
         // Accordion Animation Logic
         function toggleAccordion(btn) {
             const container = btn.parentElement;
